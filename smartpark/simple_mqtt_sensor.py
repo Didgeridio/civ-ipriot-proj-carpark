@@ -2,8 +2,18 @@
 a publication via mqtt"""
 
 import mqtt_device
+import random
+
 
 class Sensor(mqtt_device.MqttDevice):
+    def __init__(self, config):
+        super().__init__(config)
+        sensor_name = config['sensor']
+        print(f"Sensor {sensor_name} is ready")
+
+    def temperature(self):
+        """Returns the current temperature"""
+        return random.randint(10, 35)
 
     def on_detection(self, message):
         """Triggered when a detection occurs"""
@@ -23,17 +33,12 @@ class Sensor(mqtt_device.MqttDevice):
 
 
 if __name__ == '__main__':
-    config1 = {'name': 'sensor',
-              'location': 'L306',
-              'topic-root': "lot",
-              'broker': 'localhost',
-              'port': 1883,
-              'topic-qualifier': 'entry'
-              }
-    # TODO: Read config from file
+    from config_parser import parse_json_file
 
-    sensor1 = Sensor(config1)
+    config2 = parse_json_file("config2.json")
 
+    sensor1 = Sensor(config2)
+    print(sensor1)
 
     print("Sensor initialized")
     sensor1.start_sensing()

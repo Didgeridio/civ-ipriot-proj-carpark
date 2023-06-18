@@ -15,7 +15,7 @@ class MqttDevice:
 
         # initialise a paho client and bind it to the object (has-a)
 
-        self.client = paho.Client()
+        self.client = paho.Client(self.name)
         self.client.connect(self.broker,
                             self.port)
 

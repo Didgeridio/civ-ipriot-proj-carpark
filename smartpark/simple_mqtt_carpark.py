@@ -9,8 +9,11 @@ class CarPark(mqtt_device.MqttDevice):
 
     def __init__(self, config):
         super().__init__(config)
-        self.total_spaces = config['total-spaces']
-        self.total_cars = config['total-cars']
+        carpark_name = config['carpark_location']
+        self.total_spaces = config['total_spaces']
+        self.total_cars = config['total_cars']
+        self.temperature = None
+        print(f"Carpark at {carpark_name} is ready")
         self.client.on_message = self.on_message
         self.client.subscribe('sensor')
         self.client.loop_forever()
@@ -49,16 +52,7 @@ class CarPark(mqtt_device.MqttDevice):
 
 
 if __name__ == '__main__':
-    config = {'name': "raf-park",
-              'total-spaces': 130,
-              'total-cars': 0,
-              'location': 'L306',
-              'topic-root': "lot",
-              'broker': 'localhost',
-              'port': 1883,
-              'topic-qualifier': 'entry',
-              'is_stuff': False
-              }
-    # TODO: Read config from file
-    car_park = CarPark(config)
+    from config_parser import parse_json_file
+    config = parse_json_file("config.json")
     print("Carpark initialized")
+    car_park = CarPark(config)

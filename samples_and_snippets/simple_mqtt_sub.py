@@ -1,7 +1,7 @@
 import paho.mqtt.client as paho
 from paho.mqtt.client import MQTTMessage
 
-BROKER, PORT = "localhost", 1883
+BROKER, PORT = "127.0.0.1", 1883
 
 def on_message(client, userdata, msg):
     print(f'Received {msg.payload.decode()}')
@@ -9,5 +9,5 @@ def on_message(client, userdata, msg):
 client = paho.Client()
 client.on_message = on_message
 client.connect(BROKER, PORT)
-client.subscribe("lot/sensor")
+client.subscribe("carpark//parking-lot/controller")
 client.loop_forever()

@@ -32,8 +32,27 @@ Finally, you can use `yaml` if you prefer.
 """
 
 
+import json
 
-def parse_config(config: dict) -> dict:
-    """Parse the config file and return the values as a dictionary"""
-    # TODO: get the configuration from a parsed file
-    return {'location': 'TBD', 'total_spaces': 0, 'broker_host': 'TBD', 'broker_port': 0}
+import json
+
+def parse_json_file(file_path: str) -> dict:
+    with open(file_path) as json_file:
+        data = json.load(json_file)
+
+    # Create an empty dictionary
+    parsed_data = {}
+
+    # Add the values to the dictionary
+    parsed_data['location'] = data['location']
+    parsed_data['total_spaces'] = data['total_spaces']
+    parsed_data['total_cars'] = data['total_cars']
+    parsed_data['broker'] = data['broker']
+    parsed_data['sensor'] = data['sensor']
+    parsed_data['port'] = data['port']
+    parsed_data['name'] = data['name']
+    parsed_data['topic-root'] = data['topic-root']
+    parsed_data['topic-qualifier'] = data['topic-qualifier']
+    parsed_data['carpark_location'] = data['carpark_location']
+
+    return parsed_data

@@ -1,0 +1,12 @@
+{
+  "name": "display",
+  "location": "L306",
+  "topic-root": "lot",
+  "broker": "localhost",
+  "port": 1883,
+  "topic-qualifier": "na",
+  "total_spaces": 200,
+  "total_cars": 0,
+  "sensor": "",
+  "carpark_location": ""
+}

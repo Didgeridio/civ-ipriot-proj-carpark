@@ -6,8 +6,8 @@
   "topic-root": "carpark",
   "sensor": "sensor1",
   "topic-qualifier": "controller",
-  "total_spaces": 192,
-  "total_cars": 200,
+  "total_spaces": 100,
+  "total_cars": 0,
   "broker": "127.0.0.1",
   "port": 1883
 }

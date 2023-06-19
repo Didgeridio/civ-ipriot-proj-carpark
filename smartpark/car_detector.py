@@ -2,13 +2,16 @@ import random
 import threading
 import time
 import tkinter as tk
+import mqtt_device
 from typing import Iterable
 from windowed_display import WindowedDisplay
 
-class CarDetector:
+class CarDetector(mqtt_device.MqttDevice):
     """Provides a couple of simple buttons that can be used to represent a sensor detecting a car. This is a skeleton only."""
 
-    def __init__(self):
+    def __init__(self, config):
+        super().__init__(config)
+        sensor_name = config['sensor']
         self.root = tk.Tk()
         self.root.title("Car Detector ULTRA")
 
@@ -23,15 +26,18 @@ class CarDetector:
 
     def incoming_car(self):
         # TODO: implement this method to publish the detection via MQTT
+        message = "enter"
+        self.client.publish('sensor', message)
         print("Car goes in")
 
     def outgoing_car(self):
         # TODO: implement this method to publish the detection via MQTT
+        message = "exit"
+        self.client.publish('sensor', message)
         print("Car goes out")
 
 if __name__ == '__main__':
-    # TODO: Run each of these classes in a separate terminal. You should see the CarParkDisplay update when you click the buttons in the CarDetector.
-    # These classes are not designed to be used in the same module - they are both blocking. If you uncomment one, comment-out the other.
+    from config_parser import parse_json_file
 
-
-    CarDetector()
+    config2 = parse_json_file("config2.json")
+    CarDetector(config2)

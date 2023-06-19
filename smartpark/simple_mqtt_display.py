@@ -21,13 +21,7 @@ class Display(mqtt_device.MqttDevice):
        # TODO: Parse the message and extract free spaces,\
        #  temperature, time
 if __name__ == '__main__':
-    config = {'name': 'display',
-     'location': 'L306',
-     'topic-root': "lot",
-     'broker': 'localhost',
-     'port': 1883,
-     'topic-qualifier': 'na'
-     }
-    # TODO: Read config from file
+    from config_parser import parse_json_file
+    config = parse_json_file("config3.json")
     display = Display(config)
 

@@ -2,6 +2,7 @@ import paho.mqtt.client as paho
 from paho.mqtt.client import MQTTMessage
 import mqtt_device
 from datetime import datetime
+import random
 
 
 class CarPark(mqtt_device.MqttDevice):
@@ -12,32 +13,33 @@ class CarPark(mqtt_device.MqttDevice):
         carpark_name = config['carpark_location']
         self.total_spaces = config['total_spaces']
         self.total_cars = config['total_cars']
-        self.temperature = None
         print(f"Carpark at {carpark_name} is ready")
         self.client.on_message = self.on_message
         self.client.subscribe('sensor')
         self.client.loop_forever()
 
+
     @property
     def available_spaces(self):
         available = self.total_spaces - self.total_cars
+        if available > 100:
+            available = 100
         return available if available > 0 else 0
 
     def _publish_event(self):
-        readable_time = datetime.now().strftime('%H:%M')
+        readable_time = datetime.now().strftime('%H:%M:%S')
+        temperature = int(random.gauss(25, 1))
         print(f"TIME: {readable_time}, " +
               f"SPACES: {self.available_spaces}, " +
-              f"TEMPC: 42") # TODO: Temperature
+              f"TEMPC: {temperature}")
         message = (f"TIME: {readable_time}, " +
               f"SPACES: {self.available_spaces}, " +
-              f"TEMPC: 42")
+              f"TEMPC: {temperature}")
         self.client.publish('display', message)
 
     def on_car_entry(self):
         self.total_cars += 1
         self._publish_event()
-
-
 
     def on_car_exit(self):
         self.total_cars -= 1

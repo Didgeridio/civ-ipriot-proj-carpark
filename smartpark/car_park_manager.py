@@ -29,7 +29,7 @@ class CarPark(mqtt_device.MqttDevice):
         return available if available > 0 else 0
 
     def _publish_event(self):
-        readable_time = datetime.now().strftime('%H:%M:%S')
+        readable_time = datetime.now().strftime('%H:%M')
         temperature = int(random.gauss(25, 1))
         print(f"TIME: {readable_time}, " +
               f"SPACES: {self.available_spaces}, " +

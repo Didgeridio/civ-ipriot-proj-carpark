@@ -1,20 +1,19 @@
 import random
 import threading
 import time
-import mqtt_device
-import tkinter as tk
-from typing import Iterable
 from windowed_display import WindowedDisplay
 import paho.mqtt.client as paho
 
+
 class CarParkDisplay:
-    """Provides a simple display of the car park status. This is a skeleton only. The class is designed to be customizable without requiring and understanding of tkinter or threading."""
-    # determines what fields appear in the UI
     fields = ['Available bays', 'Temperature', 'At']
 
     def __init__(self):
         self.window = WindowedDisplay('Moondalup', CarParkDisplay.fields)
         updater = threading.Thread(target=self.check_updates)
+        self.time_value = ""
+        self.spaces = 0
+        self.temp = 0
         updater.daemon = True
         updater.start()
         self.window.show()
@@ -40,15 +39,15 @@ class CarParkDisplay:
         self.window.update(field_values)
 
     def check_updates(self):
-        self.spaces = 100  # Initial value
-        self.temp = int(random.gauss(25, 1)) # Initial value
-        self.time_value = time.strftime("%H:%M:%S")
+        self.spaces = 100
+        self.temp = int(random.gauss(25, 1))
+        self.time_value = time.strftime("%H:%M")
         while True:
             # Not sure if I should be updating the temp often like the time or just when a car enters
             field_values = dict(zip(CarParkDisplay.fields, [
                 f'{self.spaces}',
                 f'{self.temp}℃',
-                time.strftime("%H:%M:%S")]))
+                time.strftime("%H:%M")]))
 
             self.window.update(field_values)
 
@@ -59,8 +58,9 @@ class CarParkDisplay:
             self.client.loop_start()
             self.client.subscribe('display')
 
-            time.sleep(0.5)
+            time.sleep(5)
             self.client.loop_stop()
+
 
 if __name__ == '__main__':
     CarParkDisplay()

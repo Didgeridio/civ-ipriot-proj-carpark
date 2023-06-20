@@ -16,10 +16,18 @@ class Display(mqtt_device.MqttDevice):
 
         print('*' * 20)
     def on_message(self, client, userdata, msg):
-       data = msg.payload.decode()
-       self.display(*data.split(','))
-       # TODO: Parse the message and extract free spaces,\
-       #  temperature, time
+        payload = msg.payload.decode()
+        key_value_pairs = payload.split(", ")
+        parsed_payload = {}
+        for pair in key_value_pairs:
+            key, value = pair.split(": ")
+            parsed_payload[key.strip()] = value.strip()
+        time_value = parsed_payload['TIME']
+        spaces = parsed_payload['SPACES']
+        temp = parsed_payload['TEMPC']
+        print(f"The time is {time_value}")
+        print(f"There are {spaces} spaces available")
+        print(f"The current temperature is {temp} ℃")
 if __name__ == '__main__':
     from config_parser import parse_json_file
     config = parse_json_file("config3.json")

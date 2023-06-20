@@ -63,8 +63,4 @@ class CarParkDisplay:
             self.client.loop_stop()
 
 if __name__ == '__main__':
-    # TODO: Run each of these classes in a separate terminal. You should see the CarParkDisplay update when you click the buttons in the CarDetector.
-    # These classes are not designed to be used in the same module - they are both blocking. If you uncomment one, comment-out the other.
-
-
     CarParkDisplay()

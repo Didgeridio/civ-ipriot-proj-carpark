@@ -25,13 +25,11 @@ class CarDetector(mqtt_device.MqttDevice):
         self.root.mainloop()
 
     def incoming_car(self):
-        # TODO: implement this method to publish the detection via MQTT
         message = "enter"
         self.client.publish('sensor', message)
         print("Car goes in")
 
     def outgoing_car(self):
-        # TODO: implement this method to publish the detection via MQTT
         message = "exit"
         self.client.publish('sensor', message)
         print("Car goes out")

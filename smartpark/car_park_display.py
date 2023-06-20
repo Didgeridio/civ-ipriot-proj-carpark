@@ -39,7 +39,7 @@ class CarParkDisplay:
         self.window.update(field_values)
 
     def check_updates(self):
-        self.spaces = 100
+        self.spaces = 192
         self.temp = int(random.gauss(25, 1))
         self.time_value = time.strftime("%H:%M")
         while True:

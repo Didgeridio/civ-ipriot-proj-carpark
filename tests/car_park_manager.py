@@ -3,7 +3,6 @@ from paho.mqtt.client import MQTTMessage
 import mqtt_device
 from datetime import datetime
 import random
-import time
 
 
 class CarPark(mqtt_device.MqttDevice):
@@ -17,16 +16,7 @@ class CarPark(mqtt_device.MqttDevice):
         print(f"Carpark at {carpark_name} is ready")
         self.client.on_message = self.on_message
         self.client.subscribe('sensor')
-        self.loop_active = True
-        self.run_loop()
-
-    def run_loop(self):
-        while self.loop_active == True:
-            self.client.loop()
-            time.sleep(0.1)
-
-    def exit_loop(self):
-        self.loop_active = False
+        self.client.loop_forever()
 
 
     @property

@@ -54,8 +54,8 @@ class CarParkDisplay:
             # Check if there are any new messages in the 'display' topic
             from config_parser import parse_json_file
 
-            config = parse_json_file("config.json")
-            self.client = paho.Client("parking_big_display")
+            config = parse_json_file("config3.json")
+            self.client = paho.Client(config["name"])
             self.client.connect(config["broker"], config["port"])
             self.client.on_message = self.on_message
             self.client.loop_start()

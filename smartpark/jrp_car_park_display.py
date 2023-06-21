@@ -20,6 +20,7 @@ class CarParkDisplay:
 
     def on_message(self, client, userdata, msg):
         payload = msg.payload.decode()
+        print(payload)
         key_value_pairs = payload.split(", ")
         parsed_payload = {}
         for pair in key_value_pairs:

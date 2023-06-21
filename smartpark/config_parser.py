@@ -32,7 +32,6 @@ Finally, you can use `yaml` if you prefer.
 """
 
 
-import json
 
 import json
 

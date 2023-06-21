@@ -40,7 +40,9 @@ class CarParkDisplay:
         self.window.update(field_values)
 
     def check_updates(self):
-        self.spaces = 192
+        from config_parser import parse_json_file
+        config = parse_json_file("config3.json")
+        self.spaces = config['total_spaces']
         self.temp = int(random.gauss(25, 1))
         self.time_value = time.strftime("%H:%M")
         while True:
@@ -53,9 +55,6 @@ class CarParkDisplay:
             self.window.update(field_values)
 
             # Check if there are any new messages in the 'display' topic
-            from config_parser import parse_json_file
-
-            config = parse_json_file("config3.json")
             self.client = paho.Client(config["name"])
             self.client.connect(config["broker"], config["port"])
             self.client.on_message = self.on_message
